@@ -44,7 +44,7 @@ public class LoginTest {
     }
 
     @Test
-    public void loginIncorrectPassword(){
+    public void loginWithIncorrectPassword(){
         throw new RuntimeException("Not implemented yet.");
     }
 }
