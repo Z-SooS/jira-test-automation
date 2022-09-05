@@ -20,6 +20,7 @@ public class User {
     }
 
     public void logout(){
+        driver.findElement(By.className("aui-avatar-inner")).click();
         driver.findElement(By.id("log_out")).click();
     }
 }
