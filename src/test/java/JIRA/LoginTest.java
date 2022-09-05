@@ -1,40 +1,19 @@
 package JIRA;
 
+import Main.GetDataFromEnvFile;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 public class LoginTest {
     private WebDriver webDriver;
     private static FirefoxOptions firefoxOptions;
-    private static final String username = "automation28";
-    private static final String password = "CCAutoTest19.";
 
     @BeforeAll
     public static void setProperty(){
-        try (InputStream input = new FileInputStream("config.properties")) {
-
-            Properties prop = new Properties();
-
-            // load a properties file
-            prop.load(input);
-
-            // get the property value and print it out
-            System.out.println(prop.getProperty("driver.location"));
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-
-        System.setProperty("webdriver.gecko.driver", "E:\\Vegyes\\CodeCool\\Projects\\Advanced - Test Autmation\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", GetDataFromEnvFile.getByFieldName("driver.location"));
 
         firefoxOptions = new FirefoxOptions();
         firefoxOptions.addArguments("-private");
@@ -56,7 +35,7 @@ public class LoginTest {
 
         User user = new User(webDriver);
 
-        user.login(username, password);
+        user.login(GetDataFromEnvFile.getByFieldName("jira.username"), GetDataFromEnvFile.getByFieldName("jira.password"));
         webDriver.get("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
 
         String fullName = webDriver.findElement(By.id("up-d-fullname")).getText();
