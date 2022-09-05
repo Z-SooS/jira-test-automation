@@ -35,7 +35,7 @@ public class LoginTest {
 
         User user = new User(webDriver);
 
-        user.login(GetDataFromEnvFile.getByFieldName("jira.username"), GetDataFromEnvFile.getByFieldName("jira.password"));
+        user.login();
         webDriver.get("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
 
         String fullName = webDriver.findElement(By.id("up-d-fullname")).getText();
