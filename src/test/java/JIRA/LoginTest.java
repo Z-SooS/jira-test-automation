@@ -42,4 +42,9 @@ public class LoginTest {
 
         Assertions.assertEquals(expectedUserName, fullName);
     }
+
+    @Test
+    public void loginIncorrectPassword(){
+        throw new RuntimeException("Not implemented yet.");
+    }
 }
