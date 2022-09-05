@@ -4,24 +4,24 @@ import Main.GetDataFromEnvFile;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class LoginTest {
     private WebDriver webDriver;
-    private static FirefoxOptions firefoxOptions;
+    private static ChromeOptions browserOptions;
 
     @BeforeAll
     public static void setProperty(){
-        System.setProperty("webdriver.gecko.driver", GetDataFromEnvFile.getByFieldName("driver.location"));
+        System.setProperty("webdriver.chrome.driver", GetDataFromEnvFile.getByFieldName("driver.location"));
 
-        firefoxOptions = new FirefoxOptions();
-        firefoxOptions.addArguments("-private");
+        browserOptions = new ChromeOptions();
+        browserOptions.addArguments("--incognito");
     }
 
     @BeforeEach
     public void openNewTab(){
-        webDriver = new FirefoxDriver(firefoxOptions);
+        webDriver = new ChromeDriver(browserOptions);
     }
 
     @AfterEach
