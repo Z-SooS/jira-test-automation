@@ -51,4 +51,17 @@ public class BrowseProjects {
 
         Assertions.assertTrue(metaValues.contains(key));
     }
+
+    @Test
+    public void browseNonExistingProject()
+    {
+        String expectedError = "You can't view this project";
+
+        user.login();
+        webDriver.navigate().to("https://jira-auto.codecool.metastage.net/projects/b/summary");
+
+        String main = webDriver.findElement(By.id("main")).getText();
+
+        Assertions.assertTrue(main.contains(expectedError));
+    }
 }
