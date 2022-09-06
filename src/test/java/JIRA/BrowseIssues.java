@@ -2,12 +2,17 @@ package JIRA;
 
 import Main.FileReader;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class BrowseIssues {
     private WebDriver webDriver;
@@ -62,6 +67,26 @@ public class BrowseIssues {
         Assertions.assertTrue(contains);
     }
 
+    @ParameterizedTest
+    @MethodSource("issuesListUrls")
+    public void issuesAtLeastThree(String url)
+    {
+        int minimum = 3;
+        user.login();
 
+        webDriver.get(url);
+
+        List<WebElement> issues = webDriver.findElements(By.cssSelector("ol.issue-list > li"));
+
+        Assertions.assertTrue(issues.size() >= minimum);
+    }
+    private static Stream<String> issuesListUrls()
+    {
+        return Stream.of(
+                "https://jira-auto.codecool.metastage.net/projects/COALA/issues",
+                "https://jira-auto.codecool.metastage.net/projects/JETI/issues",
+                "https://jira-auto.codecool.metastage.net/projects/TOUCAN/issues"
+        );
+    }
 
 }
