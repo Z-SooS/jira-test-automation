@@ -37,28 +37,27 @@ public class EditIssues {
         user.login();
 
         webDriver.get("https://jira-auto.codecool.metastage.net/browse/MT-1");
-        webDriver.findElement(By.id("edit-issue")).click();
-
-        RandomHelper.Wait(webDriver);
-        webDriver.findElement(By.id("summary")).clear();
-        webDriver.findElement(By.id("summary")).sendKeys("Kacsa");
-        webDriver.findElement(By.id("edit-issue-submit")).click();
+        clickOnEditClearInputFieldSendValueClickOnSubmit("Kacsa");
 
         RandomHelper.Wait(webDriver);
         summaryValue = webDriver.findElement(By.id("summary-val")).getText();
 
         Assertions.assertEquals("Kacsa", summaryValue);
 
-        webDriver.findElement(By.id("edit-issue")).click();
-
-        RandomHelper.Wait(webDriver);
-        webDriver.findElement(By.id("summary")).clear();
-        webDriver.findElement(By.id("summary")).sendKeys(originalSummary);
-        webDriver.findElement(By.id("edit-issue-submit")).click();
+        clickOnEditClearInputFieldSendValueClickOnSubmit(originalSummary);
 
         RandomHelper.Wait(webDriver);
         summaryValue = webDriver.findElement(By.id("summary-val")).getText();
 
         Assertions.assertEquals(originalSummary, summaryValue);
+    }
+
+    private void clickOnEditClearInputFieldSendValueClickOnSubmit(String valueToInsert){
+        webDriver.findElement(By.id("edit-issue")).click();
+
+        RandomHelper.Wait(webDriver);
+        webDriver.findElement(By.id("summary")).clear();
+        webDriver.findElement(By.id("summary")).sendKeys(valueToInsert);
+        webDriver.findElement(By.id("edit-issue-submit")).click();
     }
 }
