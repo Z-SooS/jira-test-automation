@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -86,6 +87,43 @@ public class BrowseIssues {
                 "https://jira-auto.codecool.metastage.net/projects/COALA/issues",
                 "https://jira-auto.codecool.metastage.net/projects/JETI/issues",
                 "https://jira-auto.codecool.metastage.net/projects/TOUCAN/issues"
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("specificIssueProjectUrls")
+    public void checkIssuesWIthSpecificId(String projectKey)
+    {
+        String urlBase = "https://jira-auto.codecool.metastage.net/browse/";
+        int[] ids = new int[]{1,2,3};
+        String[] expectedIds = new String[ids.length];
+        String[] actualIds = new String[ids.length];
+        boolean[] actualNotFound = new boolean[ids.length];
+        boolean[] expectedNotFound = new boolean[ids.length];
+
+        user.login();
+
+        for (int index = 0; index<ids.length; index++) {
+            expectedIds[index] = projectKey + '-' + ids[index];
+
+            webDriver.get(urlBase + expectedIds[index]);
+
+            try {
+                actualIds[index] = webDriver.findElement(By.id("key-val")).getText();
+            }catch (NoSuchElementException e){
+                actualNotFound[index] = true;
+            }
+        }
+
+        Assertions.assertArrayEquals(expectedNotFound,actualNotFound);
+        Assertions.assertArrayEquals(expectedIds,actualIds);
+    }
+    private static Stream<String> specificIssueProjectUrls()
+    {
+        return Stream.of(
+                "COALA",
+                "TOUCAN",
+                "JETI"
         );
     }
 
