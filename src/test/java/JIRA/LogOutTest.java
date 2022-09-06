@@ -37,17 +37,19 @@ public class LogOutTest {
     @Test
     public void logout_SuccessfulLogout()
     {
+        String expectedToContain = "logged out";
+        String profileContain = "log in";
         user.logout();
 
         String textOutput = driver.findElement(By.cssSelector("#main > div > div > p.title > strong")).getText();
-        String expectedToContain = "logged out";
+        Assertions.assertTrue(textOutput.contains(expectedToContain));
 
         driver.navigate().refresh();
-
         String refreshOutput = driver.findElement(By.cssSelector("#main > div > header > div > div > h1")).getText();
+        Assertions.assertTrue(refreshOutput.contains(expectedToContain));
 
-
-
-        Assertions.assertTrue(textOutput.contains(expectedToContain));
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
+        String profileOutput = driver.findElement(By.cssSelector("#login-form > div.form-body > div.aui-message.aui-message-warning > p")).getText();
+        Assertions.assertTrue(profileOutput.contains(profileContain));
     }
 }
