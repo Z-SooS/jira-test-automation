@@ -36,7 +36,7 @@ public class LoginTest {
 
         User user = new User(webDriver);
 
-        user.login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
+        user.login();
         webDriver.get("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
 
         String fullName = webDriver.findElement(By.id("up-d-fullname")).getText();
@@ -51,7 +51,7 @@ public class LoginTest {
 
         webDriver.navigate().to("https://jira-auto.codecool.metastage.net/login.jsp");
 
-        webDriver.findElement(By.id("login-form-username")).sendKeys(GetDataFromEnvFile.getByFieldName("jira.username"));
+        webDriver.findElement(By.id("login-form-username")).sendKeys(FileReader.getValueByKey("jira.username"));
         webDriver.findElement(By.id("login-form-password")).sendKeys(incorrectPassword);
 
         webDriver.findElement(By.id("login-form-submit")).click();
