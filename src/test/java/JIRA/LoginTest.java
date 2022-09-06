@@ -1,6 +1,6 @@
 package JIRA;
 
-import Main.GetDataFromEnvFile;
+import Main.FileReader;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,7 +13,7 @@ public class LoginTest {
 
     @BeforeAll
     public static void setProperty(){
-        System.setProperty("webdriver.chrome.driver", GetDataFromEnvFile.getByFieldName("driver.location"));
+        System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
 
         browserOptions = new ChromeOptions();
         browserOptions.addArguments("--incognito");
@@ -31,11 +31,11 @@ public class LoginTest {
 
     @Test
     public void successfulLogin(){
-        String expectedUserName = "Auto Tester 28";
+        String expectedUserName = FileReader.getValueByKey("jira.displayname");
 
         User user = new User(webDriver);
 
-        user.login(GetDataFromEnvFile.getByFieldName("jira.username"), GetDataFromEnvFile.getByFieldName("jira.password"));
+        user.login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
         webDriver.get("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
 
         String fullName = webDriver.findElement(By.id("up-d-fullname")).getText();
