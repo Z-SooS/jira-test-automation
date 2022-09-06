@@ -72,4 +72,52 @@ public class LoginTest {
         User user = new User(webDriver);
         user.login();
     }
+
+    @Test
+    public void login_EmptyCredentials_DisplaysErrorMessage()
+    {
+        String expectedMessage = "Sorry, your username and password are incorrect - please try again.";
+
+        webDriver.navigate().to("https://jira-auto.codecool.metastage.net/login.jsp");
+
+        webDriver.findElement(By.id("login-form-submit")).click();
+
+        boolean elementFound = true;
+        String actualMessage = "";
+        try {
+            actualMessage = webDriver.findElement(By.className("aui-message-error")).getText();
+        } catch (NoSuchElementException e)
+        {
+            elementFound = false;
+        }
+
+        Assertions.assertTrue(elementFound);
+        Assertions.assertEquals(expectedMessage,actualMessage);
+    }
+
+    @Test
+    public void login_IncorrectUserName_DisplaysErrorMessage()
+    {
+        String expectedMessage = "Sorry, your username and password are incorrect - please try again.";
+        String uname = "KACSA";
+        String pass = "anything";
+
+        webDriver.navigate().to("https://jira-auto.codecool.metastage.net/login.jsp");
+
+        webDriver.findElement(By.id("login-form-username")).sendKeys(uname);
+        webDriver.findElement(By.id("login-form-password")).sendKeys(pass);
+
+        webDriver.findElement(By.id("login-form-submit")).click();
+
+        boolean elementFound = true;
+        String actualMessage = "";
+        try {
+            actualMessage = webDriver.findElement(By.className("aui-message-error")).getText();
+        } catch (NoSuchElementException e)
+        {
+            elementFound = false;
+        }
+        Assertions.assertTrue(elementFound);
+        Assertions.assertEquals(expectedMessage,actualMessage);
+    }
 }
