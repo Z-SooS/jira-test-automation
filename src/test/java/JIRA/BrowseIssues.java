@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.regex.Pattern;
+
 public class BrowseIssues {
     private WebDriver webDriver;
     private User user;
@@ -44,6 +46,20 @@ public class BrowseIssues {
         String actualSummary = webDriver.findElement(By.id("summary-val")).getText();
 
         Assertions.assertEquals(expectedSummary,actualSummary);
+    }
+
+    @Test
+    public void nonExistingIssueDetails()
+    {
+        String expectedMessage = "You can't view this issue";
+        user.login();
+
+        webDriver.navigate().to("https://jira-auto.codecool.metastage.net/browse/MTP-99999999999");
+
+        String message = webDriver.findElement(By.className("issue-body-content")).getText();
+
+        boolean contains = Pattern.compile(Pattern.quote(expectedMessage), Pattern.CASE_INSENSITIVE).matcher(message).find();
+        Assertions.assertTrue(contains);
     }
 
 
