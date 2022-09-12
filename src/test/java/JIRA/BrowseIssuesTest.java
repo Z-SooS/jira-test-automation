@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public class BrowseIssues {
+public class BrowseIssuesTest {
     private WebDriver webDriver;
     private User user;
     private static ChromeOptions browserOptions;

@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.NoSuchElementException;
 
-public class EditIssues {
+public class EditIssuesTest {
     private WebDriver webDriver;
     private static ChromeOptions browserOptions;
 

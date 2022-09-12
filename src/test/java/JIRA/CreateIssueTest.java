@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class CreateIssue {
+public class CreateIssueTest {
     private WebDriver webDriver;
     private User user;
     private static ChromeOptions browserOptions;

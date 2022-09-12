@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BrowseProjects {
+public class BrowseProjectsTest {
     private WebDriver webDriver;
     private User user;
     private static ChromeOptions browserOptions;
