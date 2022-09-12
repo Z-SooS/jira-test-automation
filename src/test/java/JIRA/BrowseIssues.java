@@ -38,7 +38,7 @@ public class BrowseIssues {
 
     @AfterEach
     public void closeTab(){
-        webDriver.close();
+        webDriver.quit();
     }
 
     @Test

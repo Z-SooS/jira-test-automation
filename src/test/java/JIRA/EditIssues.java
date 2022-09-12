@@ -28,7 +28,7 @@ public class EditIssues {
 
     @AfterEach
     public void closeTab(){
-        webDriver.close();
+        webDriver.quit();
     }
 
     @Test

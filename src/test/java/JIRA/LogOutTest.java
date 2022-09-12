@@ -31,7 +31,7 @@ public class LogOutTest {
     @AfterEach
     public void closeBrowser()
     {
-        driver.close();
+        driver.quit();
     }
 
     @Test

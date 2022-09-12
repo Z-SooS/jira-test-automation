@@ -38,7 +38,7 @@ public class BrowseProjects {
 
     @AfterEach
     public void closeTab(){
-        webDriver.close();
+        webDriver.quit();
     }
 
     @Test

@@ -27,7 +27,7 @@ public class LoginTest {
 
     @AfterEach
     public void closeTab(){
-        webDriver.close();
+        webDriver.quit();
     }
 
     @Test
