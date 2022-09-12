@@ -1,5 +1,6 @@
 package JIRA;
 
+import Main.FileReader;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +15,7 @@ public class LogOutTest {
     @BeforeAll
     public static void setDriverLocation()
     {
-        System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\WebDrivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
 
         options = new ChromeOptions();
         options.addArguments("--incognito");
