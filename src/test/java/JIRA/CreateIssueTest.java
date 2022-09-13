@@ -73,6 +73,35 @@ public class CreateIssueTest {
         Assertions.assertEquals(issueSummary, searchedIssueSummary);
     }
 
+    @Test
+    public void createIssueWithoutSummary(){
+        String expectedMessage = "You must specify a summary of the issue.";
+        user.login();
+
+        webDriver.get("https://jira-auto.codecool.metastage.net/browse/MTP-749?filter=-5");
+
+        webDriver.findElement(By.id("create_link")).click();
+
+        var wait = new WebDriverWait(webDriver, Duration.ofMillis(10000));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("create-issue-submit")));
+
+        webDriver.findElement(By.id("create-issue-submit")).click();
+
+        String actualMessage = "";
+        boolean elementFound = true;
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(By.className("error")));
+            actualMessage = webDriver.findElement(By.className("error")).getText();
+        } catch (NoSuchElementException e)
+        {
+            elementFound = false;
+        }
+
+        Assertions.assertTrue(elementFound);
+        Assertions.assertEquals(expectedMessage,actualMessage);
+
+    }
+
     private void deleteCreatedTestIssue(WebDriver webDriver){
         webDriver.findElement(By.id("opsbar-operations_more")).click();
         JavascriptExecutor jse = (JavascriptExecutor) webDriver;
