@@ -2,12 +2,21 @@ package JIRA;
 
 import Main.FileReader;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 public class EditIssuesTest {
     private WebDriver webDriver;
@@ -54,14 +63,13 @@ public class EditIssuesTest {
         Assertions.assertEquals(originalSummary, summaryValue);
     }
 
-    @Test
-    public void everyIssueEditable(){
+    @ParameterizedTest
+    @MethodSource("projects")
+    public void everyIssueEditable(String url){
         User user = new User(webDriver);
         user.login();
 
-        Assertions.assertTrue(tryToFindElement("https://jira-auto.codecool.metastage.net/browse/TOUCAN-154?jql=project%20%3D%20TOUCAN"));
-        Assertions.assertTrue(tryToFindElement("https://jira-auto.codecool.metastage.net/browse/JETI-184?jql=project%20%3D%20JETI"));
-        Assertions.assertTrue(tryToFindElement("https://jira-auto.codecool.metastage.net/issues/?jql=project%20%3D%20COALA"));
+        Assertions.assertTrue(tryToFindElement(url));
     }
 
     private void clickOnEditClearInputFieldSendValueClickOnSubmit(String valueToInsert){
@@ -83,5 +91,14 @@ public class EditIssuesTest {
         }catch (NoSuchElementException e){
             return false;
         }
+
+    }
+
+    private static Stream<Arguments> projects() {
+        return Stream.of(
+                Arguments.arguments("https://jira-auto.codecool.metastage.net/browse/TOUCAN-154?jql=project%20%3D%20TOUCAN"),
+                Arguments.arguments("https://jira-auto.codecool.metastage.net/browse/JETI-184?jql=project%20%3D%20JETI"),
+                Arguments.arguments("https://jira-auto.codecool.metastage.net/issues/?jql=project%20%3D%20COALA")
+        );
     }
 }
